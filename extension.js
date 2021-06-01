@@ -1,4 +1,3 @@
-// The module 'vscode' contains the VS Code extensibility API
 const vscode = require('vscode');
 const Git = require('simple-git').default;
 
@@ -23,14 +22,37 @@ async function perform(context){
 			return;
 		}
 		var push=allRemotes[0]["refs"]["fetch"];
-		console.log((await git.branch(['-r'])));
+		var branches=(await git.branch(['-r'])).all;
 	}
 	catch(err){
 		console.log(err);
 	}
+	
+	setTimeout(async function(){
+		if((await git.status()).modified.length!==0){
+			vscode.window.showInformationMessage('You have work that is not yet committed. Commit your changes frequently and be safe from losing your work','Commit').then(async e=>{
+				console.log('commit');
+			})
+		}
+	},3000);
 
-	vscode.window.showInformationMessage('Keep your work up to date. Do not forget to pull before you start!','Git Pull').then(e=>{
-		console.log(e);
+	vscode.window.showInformationMessage('Keep your work up to date. Do not forget to pull before you start!','Git Pull').then(async e=>{
+		if(e===undefined){
+			return;
+		}
+		var foundMain=false;
+		for(var i=0;i<branches.length;i++){
+			if(branches[i].substring(7,100)==='main'){
+				foundMain=true;
+				break;
+			}
+		}
+		if(!foundMain){
+			vscode.window.showInformationMessage('Git Pull Failed: Could not find main in remote repository','OK');
+			return;
+		}
+		await git.pull('origin','main');
+		vscode.window.showInformationMessage('Pulled changes successffully');		
 	});
 }
 
@@ -44,7 +66,8 @@ function activate(context) {
 	// The commandId parameter must match the command field in package.json
 	let disposable = vscode.commands.registerCommand('git-reminder.man', function () {
 		// The code you place here will be executed every time your command is executed
-		vscode.window.showInformationMessage('Hello World from Git Reminder!');
+		// vscode.window.showInformationMessage('Hello World from Git Reminder!');
+		perform(context);
 		
 	});
 
