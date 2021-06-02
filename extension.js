@@ -31,30 +31,77 @@ async function perform(context){
 		console.log(err);
 	}
 
-	if((await git.status()).modified.length!==0){
-		vscode.window.showInformationMessage('You have work that is not yet committed. Commit your changes frequently and be safe from losing your work','Commit').then(async e=>{
-			if(e!==undefined){
-				vscode.window.showInputBox({prompt: 'Type in your commit message'}).then(async message=>{
-					console.log(message);
-					if(message===undefined){
-						vscode.window.showInformationMessage('Commit canceled');
-					}
-					else{
-						await git.add('.');
-						await git.commit(message);
-					}
-				});
-			}
-		});
-	}
-	
+	setTimeout(async ()=>{
+		if((await git.status()).modified.length!==0){
+			vscode.window.showInformationMessage('You have work that is not yet committed. Commit your changes frequently and be safe from losing your work','Commit').then(async e=>{
+				if(e!==undefined){
+					vscode.window.showInputBox({prompt: 'Type in your commit message'}).then(async message=>{
+						// console.log(message);
+						if(message===undefined){
+							vscode.window.showInformationMessage('Commit canceled');
+						}
+						else{
+							await git.add('.');
+							await git.commit(message).then(()=>{
+								vscode.window.showInformationMessage('Changes staged and committed successfully');
+							}).catch(err=>{
+								var errstr='Error: '+err;
+								vscode.window.showInformationMessage(errstr);
+							});
+						}
+					});
+				}
+			});
+		}	
+	},50000);
+
 	setTimeout(async function(){
 		if((await git.status()).modified.length!==0){
 			vscode.window.showInformationMessage('You have work that is not yet committed. Commit your changes frequently and be safe from losing your work','Commit').then(async e=>{
-				console.log(e);
+				if(e!==undefined){
+					vscode.window.showInputBox({prompt: 'Type in your commit message'}).then(async message=>{
+						// console.log(message);
+						if(message===undefined){
+							vscode.window.showInformationMessage('Commit canceled');
+						}
+						else{
+							await git.add('.');
+							await git.commit(message).then(()=>{
+								vscode.window.showInformationMessage('Changes staged and committed successfully');
+							}).catch(err=>{
+								var errstr='Error: '+err;
+								vscode.window.showInformationMessage(errstr);
+							});
+							vscode.window.showInformationMessage('Would you like to push your commits?','Git Push').then(async (option)=>{
+								if(option!==undefined){
+									var chosenBranch;
+									if(branches.length>1){
+										for(var i=0;i<branches.length;i++){
+											branches[i]=branches[i].substring(7,100);
+										}
+										await vscode.window.showInformationMessage('Multiple remote branches detected. Select a branch you want to push to',...branches).then(async option=>{				
+											chosenBranch=option;
+										});
+									}
+									else{
+										chosenBranch='main';
+									}
+									if(chosenBranch!==undefined){
+										git.push('origin',chosenBranch).then(async ()=>{
+											var showMessage='Pushed commits to '+chosenBranch+' successfully';
+											await vscode.window.showInformationMessage(showMessage);
+										}).catch(async (err)=>{
+											vscode.window.showInformationMessage(err);
+										});
+									}
+								}
+							});
+						}
+					});
+				}
 			});
 		}
-	},3000);
+	},2000);
 
 	vscode.window.showInformationMessage('Keep your work up to date. Do not forget to pull before you start!','Git Pull').then(async e=>{
 		if(e!==undefined){
@@ -74,12 +121,15 @@ async function perform(context){
 
 			// console.log(chosenBranch);
 
-			await git.pull('origin',chosenBranch).then(async ()=>{
-				var showMessage='Pulled changes from '+chosenBranch+' successfully';
-				await vscode.window.showInformationMessage(showMessage);
-			}).catch(async err=>{
-				await vscode.window.showInformationMessage(err);
-			});
+			if(chosenBranch!==undefined){
+				await git.pull('origin',chosenBranch).then(async ()=>{
+					var showMessage='Pulled changes from '+chosenBranch+' successfully';
+					await vscode.window.showInformationMessage(showMessage);
+				}).catch(async err=>{
+					await vscode.window.showInformationMessage(err);
+				});
+			}
+
 		}
 	
 	});
