@@ -88,7 +88,7 @@ async function perform(context){
 									}
 									console.log(chosenBranch);
 									if(chosenBranch!==undefined){
-										await git.push('origin',chosenBranch).then(async ()=>{
+										await git.push('origin','HEAD:'+chosenBranch).then(async ()=>{
 											var showMessage='Pushed commits to '+chosenBranch+' successfully';
 											await vscode.window.showInformationMessage(showMessage);
 										}).catch(async (err)=>{
