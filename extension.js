@@ -86,6 +86,7 @@ async function perform(context){
 									else{
 										chosenBranch='main';
 									}
+									console.log(chosenBranch);
 									if(chosenBranch!==undefined){
 										await git.push('origin',chosenBranch).then(async ()=>{
 											var showMessage='Pushed commits to '+chosenBranch+' successfully';
