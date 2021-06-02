@@ -53,9 +53,9 @@ async function perform(context){
 				}
 			});
 		}	
-	},50000);
+	},5000);
 
-	setTimeout(async function(){
+	setInterval(async function(){
 		if((await git.status()).modified.length!==0){
 			vscode.window.showInformationMessage('You have work that is not yet committed. Commit your changes frequently and be safe from losing your work','Commit').then(async e=>{
 				if(e!==undefined){
@@ -86,7 +86,7 @@ async function perform(context){
 									else{
 										chosenBranch='main';
 									}
-									console.log(chosenBranch);
+									// console.log(chosenBranch);
 									if(chosenBranch!==undefined){
 										try{
 											await git.push('origin','HEAD:'+chosenBranch).then(async ()=>{
@@ -107,7 +107,7 @@ async function perform(context){
 				}
 			});
 		}
-	},2000);
+	},3600000);
 
 	vscode.window.showInformationMessage('Keep your work up to date. Do not forget to pull before you start!','Git Pull').then(async e=>{
 		if(e!==undefined){
