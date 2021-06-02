@@ -1,65 +1,101 @@
 const vscode = require('vscode');
 const Git = require('simple-git').default;
 
+const options = {
+	baseDir: __dirname,
+	binary: 'git',
+	maxConcurrentProcesses: 6,
+};
+const git = Git(options);
+
+var branches,push;
+
 /**
  * @param {vscode.ExtensionContext} context
  */
 
 async function perform(context){	
 
-	const options = {
-		baseDir: __dirname,
-		binary: 'git',
-		maxConcurrentProcesses: 6,
-	};
-
-	const git = Git(options);
-
 	try{
 		var allRemotes=await git.getRemotes(true);
-		console.log(allRemotes);
-		if(allRemotes.length===0){
-			return;
+		// console.log(allRemotes);
+		if(allRemotes.length!==0){
+			push=allRemotes[0]["refs"]["fetch"];
+			await git.fetch();
+			branches=(await git.branch(['-r'])).all;
 		}
-		var push=allRemotes[0]["refs"]["fetch"];
-		var branches=(await git.branch(['-r'])).all;
+		
+		// console.log(branches);
 	}
 	catch(err){
 		console.log(err);
+	}
+
+	if((await git.status()).modified.length!==0){
+		vscode.window.showInformationMessage('You have work that is not yet committed. Commit your changes frequently and be safe from losing your work','Commit').then(async e=>{
+			if(e!==undefined){
+				vscode.window.showInputBox({prompt: 'Type in your commit message'}).then(async message=>{
+					console.log(message);
+					if(message===undefined){
+						vscode.window.showInformationMessage('Commit canceled');
+					}
+					else{
+						await git.add('.');
+						await git.commit(message);
+					}
+				});
+			}
+		});
 	}
 	
 	setTimeout(async function(){
 		if((await git.status()).modified.length!==0){
 			vscode.window.showInformationMessage('You have work that is not yet committed. Commit your changes frequently and be safe from losing your work','Commit').then(async e=>{
-				console.log('commit');
-			})
+				console.log(e);
+			});
 		}
 	},3000);
 
 	vscode.window.showInformationMessage('Keep your work up to date. Do not forget to pull before you start!','Git Pull').then(async e=>{
-		if(e===undefined){
-			return;
-		}
-		var foundMain=false;
-		for(var i=0;i<branches.length;i++){
-			if(branches[i].substring(7,100)==='main'){
-				foundMain=true;
-				break;
+		if(e!==undefined){
+			var chosenBranch;
+			if(branches.length>1){
+				for(var i=0;i<branches.length;i++){
+					branches[i]=branches[i].substring(7,100);
+				}
+				await vscode.window.showInformationMessage('Multiple remote branches detected. Select a branch you want to pull from',...branches).then(async option=>{				
+					// console.log(option);
+					chosenBranch=option;
+				});
 			}
+			else{
+				chosenBranch='main';
+			}
+
+			// console.log(chosenBranch);
+
+			await git.pull('origin',chosenBranch).then(async ()=>{
+				var showMessage='Pulled changes from '+chosenBranch+' successfully';
+				await vscode.window.showInformationMessage(showMessage);
+			}).catch(async err=>{
+				await vscode.window.showInformationMessage(err);
+			});
 		}
-		if(!foundMain){
-			vscode.window.showInformationMessage('Git Pull Failed: Could not find main in remote repository','OK');
-			return;
-		}
-		await git.pull('origin','main');
-		vscode.window.showInformationMessage('Pulled changes successffully');		
+	
 	});
 }
+
+// async function temp(context){
+// 	vscode.window.showInputBox({prompt: 'Type in your commit message'}).then(message=>{
+// 		console.log(message);
+// 	});
+// }
 
 function activate(context) {
 	console.log('Congratulations, your extension "git-reminder" is now active!');
 
 	perform(context);
+	// temp(context);
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with  registerCommand
@@ -67,7 +103,7 @@ function activate(context) {
 	let disposable = vscode.commands.registerCommand('git-reminder.man', function () {
 		// The code you place here will be executed every time your command is executed
 		// vscode.window.showInformationMessage('Hello World from Git Reminder!');
-		perform(context);
+		perform(context);		
 		
 	});
 
