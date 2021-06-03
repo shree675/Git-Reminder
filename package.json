@@ -7,6 +7,10 @@
         "vscode": "^1.54.0"
     },
     "publisher": "shree675",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/shree675/Git-Reminder"
+    },
     "categories": [
         "Other"
     ],
