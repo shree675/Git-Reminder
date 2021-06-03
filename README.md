@@ -14,7 +14,7 @@ Git Reminder is a simple and useful VS Code extension that provides periodic rem
 
   <img src="screenshots/Screenshot (174).png" width="600"></img>
 
-* Apart from the Git Pull reminder, the extension also reminds the user, once in every hour, to commit changes.
+* Apart from the Git Pull reminder, the extension also reminds the user, once in every hour, to commit changes. This prompt will be triggered only if the user has files that are uncommitted.
 
   <img src="screenshots/Screenshot (177).png" width="600"></img>
 
