@@ -32,9 +32,9 @@ Git Reminder is a simple and useful VS Code extension that provides periodic rem
   <img src="screenshots/Screenshot (185).png" width="600"></img>
 
 ## Activation
-The extension will activate automatically on startup. To force activate it manually, 
-* In the VS Code window, perform ```Ctrl+Shift+P``` to open up the command palette.
-* Type ```git-rem``` and press ```Enter``` to reactivate the extension.
+The extension will activate automatically on startup. To force it manually, 
+* in the VS Code window, perform ```Ctrl+Shift+P``` key binding to open up the command palette.
+* type ```git-rem``` and press ```Enter``` to reactivate the extension.
 
 ## Version
 Currently in Beta. Users may experience bugs.  
