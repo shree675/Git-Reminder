@@ -50,7 +50,7 @@ async function perform(context) {
                     .commit(message)
                     .then(() => {
                       vscode.window.showInformationMessage(
-                        "Changes staged and committed successfully"
+                        "Files staged and committed successfully"
                       );
                     })
                     .catch((err) => {
@@ -85,7 +85,7 @@ async function perform(context) {
                     .commit(message)
                     .then(() => {
                       vscode.window.showInformationMessage(
-                        "Changes staged and committed successfully"
+                        "Files staged and committed successfully"
                       );
                     })
                     .catch((err) => {
