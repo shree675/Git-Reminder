@@ -143,7 +143,7 @@ async function perform(context) {
           }
         });
     }
-  }, 4000);
+  }, 0);
 
   vscode.window
     .showInformationMessage(
