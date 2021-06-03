@@ -57,9 +57,9 @@ async function perform(context) {
                     }
                 });
         }
-    }, 5000);
+    }, 500000);
 
-    setInterval(async function () {
+    setTimeout(async function () {
         if ((await git.status()).modified.length !== 0) {
             vscode.window
                 .showInformationMessage(
@@ -130,7 +130,7 @@ async function perform(context) {
                     }
                 });
         }
-    }, 3600000);
+    }, 0);
 
     vscode.window
         .showInformationMessage("Keep your work up to date. Do not forget to pull before you start!", "Git Pull")
