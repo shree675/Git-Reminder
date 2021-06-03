@@ -98,7 +98,7 @@ async function perform(context) {
                                                 }
                                                 await vscode.window
                                                     .showInformationMessage(
-                                                        "Multiple remote branches detected. Select a branch you want to push to",
+                                                        "Multiple remote branches detected. Select a branch you want to push to.",
                                                         ...branches
                                                     )
                                                     .then(async (option) => {
@@ -143,7 +143,7 @@ async function perform(context) {
                     }
                     await vscode.window
                         .showInformationMessage(
-                            "Multiple remote branches detected. Select a branch you want to pull from",
+                            "Multiple remote branches detected. Select a branch you want to pull from.",
                             ...branches
                         )
                         .then(async (option) => {
@@ -172,27 +172,20 @@ async function perform(context) {
         });
 }
 
-async function temp(context) {
-    try {
-        console.log(await git.push("origin", "main"));
-    } catch (err) {
-        console.log(err);
-    }
-}
+// async function temp(context) {
+//     try {
+//         console.log(await git.push("origin", "main"));
+//     } catch (err) {
+//         console.log(err);
+//     }
+// }
 
 function activate(context) {
     console.log('Congratulations, your extension "git-reminder" is now active!');
 
     perform(context);
 
-    // temp(context);
-
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with  registerCommand
-    // The commandId parameter must match the command field in package.json
     let disposable = vscode.commands.registerCommand("git-reminder.man", function () {
-        // The code you place here will be executed every time your command is executed
-        // vscode.window.showInformationMessage('Hello World from Git Reminder!');
         perform(context);
     });
 
