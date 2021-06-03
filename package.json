@@ -6,6 +6,7 @@
     "engines": {
         "vscode": "^1.54.0"
     },
+    "publisher": "shree675",
     "categories": [
         "Other"
     ],
