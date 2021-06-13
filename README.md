@@ -40,7 +40,7 @@ The extension will activate automatically on startup. To force it manually,
 Currently in Beta. Users may experience bugs.  
 PRs are welcome.
 
-## Screenshote
+## Screenshots
 Screenshots are present in [screenshots](https://github.com/shree675/Git-Reminder/blob/main/screenshots/) folder.
 
 ## Notes
