@@ -22,7 +22,7 @@ Git Reminder is a simple and useful VS Code extension that provides periodic rem
 
   <img src="https://github.com/shree675/Git-Reminder/blob/main/screenshots/Screenshot%20(179).png" width="600"></img>
 
-* Upon clicking the ```Enter``` key, if the commit is successful, a message will be displayed acknowledging the successful commit.<sup>[2](https://github.com/shree675/Git-Reminder#notes)</sup>
+* Upon clicking the <kbd>Enter</kbd> key, if the commit is successful, a message will be displayed acknowledging the successful commit.<sup>[2](https://github.com/shree675/Git-Reminder#notes)</sup>
 * Optionally, the user can push the commit on clicking the 'Git Push' button. In case there is more than one remote branch in the repository, the prompt will ask the user to select a branch to perform the push operation.
 
   <img src="https://github.com/shree675/Git-Reminder/blob/main/screenshots/Screenshot%20(182).png" width="600"></img>
@@ -33,8 +33,8 @@ Git Reminder is a simple and useful VS Code extension that provides periodic rem
 
 ## Activation
 The extension will activate automatically on startup. To force it manually, 
-* in the VS Code window, perform ```Ctrl+Shift+P``` key binding to open up the command palette.
-* type ```git-rem``` and press ```Enter``` to reactivate the extension.
+* in the VS Code window, perform <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> key binding to open up the command palette.
+* type ```git-rem``` and press <kbd>Enter</kbd> to reactivate the extension.
 
 ## Version
 Currently in Beta. Users may experience bugs.  
