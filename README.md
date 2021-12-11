@@ -2,11 +2,11 @@
 Beta
 
 ## About
-Git Reminder is a simple and useful VS Code extension that provides periodic reminders, along with their facilities, to save users from losing their work.
+Git Reminder is a simple and useful VSCode extension that provides periodic reminders, along with their facilities, to save users from losing their work.
 
 ## Features
 
-* Git Reminder activates on VS Code startup. If the present directory is recognized as a git-initialized directory, then the extension triggers a pull reminder immediately on startup. But if the present directory is not initialized with git, then the extension will remain dormant.
+* Git Reminder activates on VSCode startup. If the present directory is recognized as a git-initialized directory, then the extension triggers a pull reminder immediately on startup. But if the present directory is not initialized with git, then the extension will remain dormant.
 
   <img src="https://github.com/shree675/Git-Reminder/blob/main/screenshots/Screenshot%20(171).png" width="600"></img>
 
@@ -33,7 +33,7 @@ Git Reminder is a simple and useful VS Code extension that provides periodic rem
 
 ## Activation
 The extension will activate automatically on startup. To force it manually, 
-* in the VS Code window, perform <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> key binding to open up the command palette.
+* in the VSCode window, perform <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> key binding to open up the command palette.
 * type ```git-rem``` and press <kbd>Enter</kbd> to reactivate the extension.
 
 ## Version
