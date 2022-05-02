@@ -2,7 +2,7 @@ const vscode = require("vscode");
 const Git = require("simple-git").default;
 
 const options = {
-  baseDir: __dirname,
+  baseDir: vscode.workspace.workspaceFolders[0].uri.fsPath,
   binary: "git",
   maxConcurrentProcesses: 6,
 };
@@ -192,17 +192,8 @@ async function perform(context) {
     });
 }
 
-// async function temp(context) {
-//     try {
-//         console.log(await git.push("origin", "main"));
-//     } catch (err) {
-//         console.log(err);
-//     }
-// }
-
 function activate(context) {
   console.log('Congratulations, your extension "git-reminder" is now active!');
-
   perform(context);
 
   let disposable = vscode.commands.registerCommand(
